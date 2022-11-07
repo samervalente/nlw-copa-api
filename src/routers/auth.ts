@@ -47,6 +47,6 @@ export async function authRoutes(fastify: FastifyInstance){
             expiresIn:'2 days'
         })
 
-        res.status(201).send({token})
+        res.status(201).send({sessionToken})
     })
 }
