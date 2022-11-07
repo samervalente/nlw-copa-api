@@ -3,6 +3,12 @@ import { z } from "zod";
 import prisma from "../config/prisma";
 
 export async function authRoutes(fastify: FastifyInstance){
+    fastify.get('/me', async (req, res) => {
+        await req.jwtVerify()
+        return ({user: req.user})
+    })
+
+
     fastify.post('/users', async (req, res) => {
         const createUserBody = z.object({
             token: z.string(),
@@ -41,7 +47,7 @@ export async function authRoutes(fastify: FastifyInstance){
 
         const sessionToken = fastify.jwt.sign({
             name, 
-            avatatarUrl: picture
+            avatarUrl: picture
         }, {
             sub: id,
             expiresIn:'2 days'
