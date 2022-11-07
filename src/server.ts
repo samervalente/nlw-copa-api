@@ -5,6 +5,10 @@ import { authRoutes } from "./routers/auth";
 import { gameRoutes } from "./routers/game";
 import { guessRoutes } from "./routers/guess";
 import { userRoutes } from "./routers/user";
+import jwt from '@fastify/jwt'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 async function start() {
   const fastify = Fastify({
@@ -14,6 +18,10 @@ async function start() {
   await fastify.register(cors, {
     origin: true,
   });
+
+  await fastify.register(jwt ,{
+    secret:'@#872463'
+  })
 
   await fastify.register(authRoutes)
   await fastify.register(userRoutes)

@@ -13,6 +13,7 @@ datasource db {
 
 model User {
   id               String        @id @default(cuid())
+  googleId         String?       @unique
   name             String
   email            String        @unique
   avatarUrl        String?
@@ -26,7 +27,7 @@ model Participant {
   userId  String
   poolId  String
   pool    Pool    @relation(fields: [poolId], references: [id])
-  user    User   @relation(fields: [userId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
   guesses Guess[]
 
   @@unique([userId, poolId])
@@ -38,7 +39,7 @@ model Pool {
   code         String        @unique
   ownerId      String?
   createdAt    DateTime      @default(now())
-  owner        User?          @relation(fields: [ownerId], references: [id])
+  owner        User?         @relation(fields: [ownerId], references: [id])
   participants Participant[]
 }
 
